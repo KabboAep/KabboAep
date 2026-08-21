@@ -3,79 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kabbo Aep</title>
+<title>Kabbo Aep — Store</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f6f7fb;color:#151515}
-header{background:#111827;color:white;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
-.logo{font-size:25px;font-weight:800}.login{background:#fff;color:#111827;border:0;padding:10px 16px;border-radius:10px;font-weight:700}
-.hero{padding:55px 6%;background:linear-gradient(135deg,#111827,#374151);color:#fff}
-.hero h1{font-size:40px;margin-bottom:10px}.hero p{color:#d1d5db;max-width:600px}
-.wallet{margin:22px 6% 0;background:#fff;border-radius:18px;padding:22px;box-shadow:0 8px 30px #00000010;display:flex;justify-content:space-between;align-items:center}
-.balance{font-size:28px;font-weight:800}.fund{background:#16a34a;color:#fff;border:0;padding:11px 16px;border-radius:10px;font-weight:700}
-main{padding:35px 6%}.title{font-size:25px;margin-bottom:20px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.card{background:#fff;border-radius:16px;padding:15px;box-shadow:0 7px 25px #0000000d}
-.pic{height:150px;border-radius:12px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:14px}
-.card h3{margin-bottom:7px}.price{font-size:20px;font-weight:800;margin:12px 0}.buy{width:100%;padding:11px;border:0;border-radius:10px;background:#111827;color:#fff;font-weight:700}
-footer{text-align:center;padding:30px;color:#6b7280}
-@media(max-width:600px){.hero h1{font-size:32px}.wallet{margin-left:4%;margin-right:4%}}
+:root{--bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--dark:#111827;--line:#e5e7eb}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{height:64px;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:10}
+.logo{font-size:23px;font-weight:800}.login{border:0;background:#fff;color:#111827;padding:10px 15px;border-radius:10px;font-weight:700}
+.hero{padding:55px 5%;background:linear-gradient(135deg,#111827,#4b5563);color:#fff}.hero h1{font-size:38px;margin-bottom:10px}.hero p{color:#d1d5db;max-width:620px;line-height:1.6}
+.wallet{margin:-22px 5% 30px;background:#fff;border-radius:18px;padding:20px;box-shadow:0 10px 35px #00000012;display:flex;justify-content:space-between;align-items:center;gap:15px;position:relative}
+.wallet small{color:var(--muted)}.balance{font-size:28px;font-weight:800;margin-top:4px}.fund{background:#16a34a;color:#fff;border:0;padding:11px 16px;border-radius:10px;font-weight:700}
+main{padding:0 5% 40px}.section-title{font-size:24px;margin-bottom:18px}.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px}.pic{height:150px;border-radius:12px;background:#eef0f4;display:flex;align-items:center;justify-content:center;font-size:50px;margin-bottom:14px}.card p{color:var(--muted);margin-top:7px;line-height:1.4}.price{font-size:20px;font-weight:800;margin:14px 0}.buy{width:100%;border:0;background:var(--dark);color:#fff;padding:11px;border-radius:10px;font-weight:700}
+.orders{margin-top:35px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.empty{color:var(--muted);padding:18px 0}
+footer{text-align:center;color:var(--muted);padding:30px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{background:#fff;border-radius:18px;padding:25px;width:min(400px,100%);text-align:center}.close{float:right;border:0;background:none;font-size:22px}.google{width:100%;margin-top:22px;padding:13px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:700}
+.note{font-size:12px;color:var(--muted);margin-top:15px;line-height:1.5}
+@media(max-width:600px){.hero h1{font-size:31px}.wallet{margin-left:4%;margin-right:4%}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">Kabbo Aep</div>
-  <button class="login" onclick="login()">Continue with Google</button>
-</header>
-
-<section class="hero">
-  <h1>Welcome to Kabbo Aep</h1>
-  <p>Buy products quickly and securely from your Kabbo Aep wallet.</p>
-</section>
+<header><div class="logo">Kabbo Aep</div><button class="login" onclick="openLogin()">Login</button></header>
+<section class="hero"><h1>Simple. Fast. Kabbo Aep.</h1><p>Buy your products from one place. Your secure wallet, orders and payment system will be connected in the next backend step.</p></section>
 
 <section class="wallet">
-  <div>
-    <small>Wallet Balance</small>
-    <div class="balance" id="balance">৳ 0.00</div>
-  </div>
+  <div><small>Wallet Balance</small><div class="balance" id="balance">৳ 0.00</div></div>
   <button class="fund" onclick="addFund()">＋ Add Fund</button>
 </section>
 
 <main>
-  <h2 class="title">Featured Products</h2>
-  <div class="products">
-    <div class="card">
-      <div class="pic">📱</div><h3>Premium Product</h3>
-      <p>High-quality digital product.</p><div class="price">৳ 199</div>
-      <button class="buy" onclick="buy(199,'Premium Product')">Buy Now</button>
-    </div>
-    <div class="card">
-      <div class="pic">🎮</div><h3>Gaming Package</h3>
-      <p>Instant delivery after purchase.</p><div class="price">৳ 299</div>
-      <button class="buy" onclick="buy(299,'Gaming Package')">Buy Now</button>
-    </div>
-    <div class="card">
-      <div class="pic">⭐</div><h3>VIP Package</h3>
-      <p>Premium access and benefits.</p><div class="price">৳ 499</div>
-      <button class="buy" onclick="buy(499,'VIP Package')">Buy Now</button>
-    </div>
-  </div>
-</main>
+<h2 class="section-title">Products</h2>
+<div class="products">
+  <article class="card"><div class="pic">📱</div><h3>Premium Product</h3><p>Digital product with instant delivery.</p><div class="price">৳ 199</div><button class="buy" onclick="buy(199,'Premium Product')">Buy Now</button></article>
+  <article class="card"><div class="pic">🎮</div><h3>Gaming Package</h3><p>Fast delivery after successful payment.</p><div class="price">৳ 299</div><button class="buy" onclick="buy(299,'Gaming Package')">Buy Now</button></article>
+  <article class="card"><div class="pic">⭐</div><h3>VIP Package</h3><p>Premium package and benefits.</p><div class="price">৳ 499</div><button class="buy" onclick="buy(499,'VIP Package')">Buy Now</button></article>
+</div>
 
-<footer>© 2026 Kabbo Aep — Demo Store</footer>
+<section class="orders"><h2>My Orders</h2><div id="orders" class="empty">Login and purchase a product to see your orders here.</div></section>
+</main>
+<footer>© 2026 Kabbo Aep</footer>
+
+<div class="modal" id="loginModal"><div class="modal-box"><button class="close" onclick="closeLogin()">×</button><h2>Login to Kabbo Aep</h2><p style="margin-top:8px;color:#6b7280">Google Login will be connected securely with the backend.</p><button class="google" onclick="demoLogin()">🔐 Continue with Google</button><div class="note">This button is currently a demo. Real Google authentication comes after the database/backend setup.</div></div></div>
 
 <script>
-let balance = 0;
+let balance=0,orders=[];
 function update(){document.getElementById('balance').textContent='৳ '+balance.toFixed(2)}
-function login(){alert('Google Login will be connected in the backend version.')}
-function addFund(){
-  const amount = prompt('Demo: enter fund amount');
-  if(amount && Number(amount)>0){balance += Number(amount); update(); alert('Demo balance added. Real bKash/Nagad/Rocket will be connected later.')}
-}
-function buy(price,name){
-  if(balance < price){alert('Insufficient wallet balance. Please add fund first.');return}
-  balance -= price; update(); alert(name+' purchased successfully! (Demo)')
-}
+function openLogin(){document.getElementById('loginModal').classList.add('show')}
+function closeLogin(){document.getElementById('loginModal').classList.remove('show')}
+function demoLogin(){closeLogin();alert('Demo login successful. Real Google Login will be connected next.')}
+function addFund(){let a=prompt('Demo wallet: enter amount');a=Number(a);if(a>0){balance+=a;update();alert('Demo fund added. Real bKash/Nagad/Rocket payment will be connected securely next.')}}
+function buy(price,name){if(balance<price){alert('Insufficient wallet balance. Add fund first.');return}balance-=price;update();orders.unshift(name+' — ৳ '+price);document.getElementById('orders').innerHTML=orders.map(x=>'<div style="padding:10px 0;border-bottom:1px solid #eee">'+x+'</div>').join('');alert('Demo purchase successful!')}
 </script>
 </body>
 </html>
